@@ -7,9 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using CSVWorker.EmailService;
 
-namespace CSVWorker.Notifications
+namespace ULearn.EmailService.Implementation
 {
     public interface IEmailSender  
     {

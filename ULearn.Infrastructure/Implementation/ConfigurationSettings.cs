@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System;
 
-namespace CsvWorker.infrastructure.Implementation
+namespace ULearn.infrastructure.Implementation
 {
     public class ConfigurationSettings : IConfigurationSettings
     {

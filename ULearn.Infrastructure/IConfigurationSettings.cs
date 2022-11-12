@@ -1,4 +1,4 @@
-﻿namespace CsvWorker.infrastructure
+﻿namespace ULearn.infrastructure
 {
     public interface IConfigurationSettings
     {

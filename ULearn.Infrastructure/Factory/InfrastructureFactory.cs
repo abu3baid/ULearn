@@ -1,7 +1,7 @@
-﻿using CsvWorker.infrastructure.Implementation;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using ULearn.infrastructure.Implementation;
 
-namespace CsvWorker.infrastructure.Factory
+namespace ULearn.infrastructure.Factory
 {
     public class InfrastructureFactory
     {

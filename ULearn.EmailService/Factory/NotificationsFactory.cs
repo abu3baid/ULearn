@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using CSVWorker.Notifications.Implementation;
 using Microsoft.Extensions.DependencyInjection;
+using ULearn.EmailService.Implementation;
 
-namespace CSVWorker.Notifications.Factory
+namespace ULearn.EmailService.Factory
 {
     public static class NotificationsFactory
     {

@@ -11,12 +11,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\ULearn.Common\ULearn.Common.csproj" />
 	  <ProjectReference Include="..\ULearn.DbModel\ULearn.DbModel.csproj" />
+	  <ProjectReference Include="..\ULearn.EmailService\ULearn.EmailService.csproj" />
+	  <ProjectReference Include="..\ULearn.Infrastructure\ULearn.Infrastructure.csproj" />
 	  <ProjectReference Include="..\ULearn.ModelView\ULearn.ModelView.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Manager\Interfaces\" />
 	</ItemGroup>
 
 </Project>

@@ -1,8 +1,7 @@
-﻿using CSVWorker.EmailService;
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
 using MimeKit;
 
-namespace CSVWorker.Notifications.Implementation
+namespace ULearn.EmailService.Implementation
 {
     public class EmailSender : IEmailSender
     {

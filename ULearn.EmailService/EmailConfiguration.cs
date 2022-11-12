@@ -1,4 +1,4 @@
-﻿namespace CSVWorker.EmailService
+﻿namespace ULearn.EmailService
 {
     public class EmailConfiguration
     {

@@ -6,7 +6,7 @@ namespace ULearn.Common.Extensions
     {
         public int ErrorCode { get; set; }
 
-        public ULearnException() : base("Tazeez Exception")
+        public ULearnException() : base("ULearn Exception")
         {
         }
 

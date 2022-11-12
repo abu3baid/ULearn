@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CSVWorker.EmailService
+namespace ULearn.EmailService
 {
     public class Message
     {

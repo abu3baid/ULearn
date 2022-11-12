@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using ULearn.DbModel.Models.DB;
+using ULearn.ModelView.ModelView;
 
 namespace LMS.Core.Mapper
 {
@@ -6,7 +8,7 @@ namespace LMS.Core.Mapper
     {
         public Mapping()
         {
-
+            CreateMap<UserModel, User>().ReverseMap();
         }
     }
 }
