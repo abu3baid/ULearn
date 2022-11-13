@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -16,9 +17,11 @@ namespace ULearn.DbModel.Models.DB
         public string Name { get; set; }
         public string Description { get; set; }
         public int CourseId { get; set; }
+        [Timestamp]
         public DateTime CreatedDate { get; set; }
+        [Timestamp]
         public DateTime UpdatedDate { get; set; }
-        public byte IsArchived { get; set; }
+        public bool IsArchived { get; set; }
 
         public virtual Course Course { get; set; }
         public virtual ICollection<Video> Videos { get; set; }

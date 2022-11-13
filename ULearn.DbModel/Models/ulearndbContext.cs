@@ -293,6 +293,11 @@ namespace ULearn.DbModel.Models
                     .HasMaxLength(255)
                     .HasDefaultValueSql("''");
 
+                entity.Property(e => e.LastName)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasDefaultValueSql("''");
+
                 entity.Property(e => e.Image)
                     .IsRequired()
                     .HasMaxLength(255)
@@ -300,7 +305,11 @@ namespace ULearn.DbModel.Models
 
                 entity.Property(e => e.IsArchived).HasColumnType("tinyint");
 
-                entity.Property(e => e.LastName)
+                entity.Property(e => e.IsSuperAdmin).HasColumnType("tinyint");
+
+                entity.Property(e => e.IsEmailConfirmed).HasColumnType("tinyint");
+
+                entity.Property(e => e.ConfirmationLink)
                     .IsRequired()
                     .HasMaxLength(255)
                     .HasDefaultValueSql("''");
@@ -365,6 +374,11 @@ namespace ULearn.DbModel.Models
                 entity.Property(e => e.CreatedDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasDefaultValueSql("''");
+
+                entity.Property(e => e.Url)
                     .IsRequired()
                     .HasMaxLength(255)
                     .HasDefaultValueSql("''");
