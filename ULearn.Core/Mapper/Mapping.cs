@@ -8,6 +8,7 @@ namespace LMS.Core.Mapper
     {
         public Mapping()
         {
+            CreateMap<User, LoginUserResponse>().ReverseMap();
             CreateMap<UserModel, User>().ReverseMap();
         }
     }
