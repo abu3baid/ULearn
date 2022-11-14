@@ -17,6 +17,8 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using ULearn.API.Extensions;
+using ULearn.API.Factory;
+using ULearn.DbModel.Models;
 using ULearn.EmailService;
 using Unchase.Swashbuckle.AspNetCore.Extensions.Extensions;
 
@@ -65,6 +67,10 @@ namespace ULearn.API
                        .AllowAnyMethod()
                        .AllowAnyHeader();
             }));
+
+            ApiFactory.RegisterDependencies(services);
+
+            services.AddDbContext<ulearndbContext>();
 
             services.AddSingleton(sp => _mapperConfiguration.CreateMapper());
 
@@ -176,18 +182,25 @@ namespace ULearn.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger(c =>
+            }
+
+            Log.Logger = new LoggerConfiguration()
+                          .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Minute)
+                          .CreateLogger();
+
+            app.UseSwagger(c =>
+            {
+                c.RouteTemplate = "swagger/{documentName}/swagger.json";
+                c.PreSerializeFilters.Add((swaggerDoc, httpReq) =>
                 {
-                    c.RouteTemplate = "swagger/{documentName}/swagger.json";
-                    c.PreSerializeFilters.Add((swaggerDoc, httpReq) =>
-                    {
-                        swaggerDoc.Servers = new List<OpenApiServer>
+                    swaggerDoc.Servers = new List<OpenApiServer>
                     {
                         new OpenApiServer { Url = $"{Configuration.GetSection("Domain").Value}" }
                     };
-                    });
                 });
-                app.UseSwaggerUI(
+            });
+
+            app.UseSwaggerUI(
             options =>
             {
                 // build a swagger endpoint for each discovered API version  
@@ -196,11 +209,6 @@ namespace ULearn.API
                     options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
                 }
             });
-            }
-
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Minute)
-                .CreateLogger();
 
             app.ConfigureExceptionHandler(Log.Logger, env);
 

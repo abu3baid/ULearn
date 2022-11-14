@@ -22,15 +22,6 @@ namespace ULearn.API.Controllers
             _userManager = userManager;
         }
 
-        // GET: api/<UserController>
-        [HttpGet]
-        [Route("api/v{version:apiVersion}/user/ahmad")]
-        [MapToApiVersion("1")]
-        public IActionResult Get()
-        {            
-            return Ok();
-        }
-
         [Route("api/v{version:apiVersion}/user/signUp")]
         [HttpPost]
         [AllowAnonymous]
@@ -62,9 +53,7 @@ namespace ULearn.API.Controllers
             return File(byteArray, "image/jpeg", filename);
         }
 
-        // PUT api/<UserController>/5
-        // update my profile
-        [Route("api/v{version:apiVersion}/user/me")]
+        [Route("api/v{version:apiVersion}/user/myProfile")]
         [HttpPut]
         [MapToApiVersion("1")]
         [Authorize]
@@ -74,7 +63,6 @@ namespace ULearn.API.Controllers
             return Ok(user);
         }
 
-        // DELETE api/<UserController>/5
         [HttpDelete]
         [Route("api/v{version:apiVersion}/user/{id}")]
         [MapToApiVersion("1")]
@@ -83,7 +71,6 @@ namespace ULearn.API.Controllers
             _userManager.DeleteUser(LoggedInUser, id);
             return Ok();
         }
-
 
         [Route("api/v{version:apiVersion}/user/Confirmation")]
         [HttpPost]
