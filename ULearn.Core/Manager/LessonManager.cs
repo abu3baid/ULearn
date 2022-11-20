@@ -1,42 +1,42 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using ULearn.Common.Extensions;
-using ULearn.Core.Manager.Interfaces;
-using ULearn.DbModel.Models;
 using ULearn.DbModel.Models.DB;
-using ULearn.ModelView.ModelView;
+using ULearn.DbModel.Models;
 using ULearn.ModelView.ModelView.Response;
+using ULearn.ModelView.ModelView;
 using ULearn.ModelView.Request;
 
 namespace ULearn.Core.Manager
 {
-    public class CourseManager : ICourseManager
+    public class LessonManager
     {
         public ulearndbContext _ulearndbContext;
         private IMapper _mapper;
 
-        public CourseManager(ulearndbContext ulearndbContext, IMapper mapper)
+        public LessonManager(ulearndbContext ulearndbContext, IMapper mapper)
         {
             _ulearndbContext = ulearndbContext;
             _mapper = mapper;
         }
 
-        public CourseModel CreateCourse(UserModel currentUser, CourseRequest courseRequest)
+        public LessonModel CreateLesson(UserModel currentUser, LessonRequest lessonRequest)
         {
-            Course course = null;
+            Lesson lesson = null;
 
-            course = _ulearndbContext.Courses.Add(new Course
+            lesson = _ulearndbContext.Lessons.Add(new Lesson
             {
-                CourseName = courseRequest.CourseName,
-                CourseDescription = courseRequest.CourseDescription,
-                TeacherId = currentUser.Id
+                Name = lessonRequest.Name,
+                Description = lessonRequest.Description,
+                CourseId = lessonRequest.CourseId
             }).Entity;
 
             _ulearndbContext.SaveChanges();
-            return _mapper.Map<CourseModel>(course);
+            return _mapper.Map<LessonModel>(lesson);
         }
 
         public CourseModel GetCourse(UserModel currentUser, int id)

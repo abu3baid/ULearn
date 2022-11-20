@@ -126,6 +126,7 @@ namespace ULearn.Core.Manager
 
             user.FirstName = request.FirstName;
             user.LastName = request.LastName;
+            user.Phone = request.Phone;
 
             if (!string.IsNullOrWhiteSpace(url))
             {

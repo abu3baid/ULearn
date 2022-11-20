@@ -9,7 +9,6 @@ namespace ULearn.API.Controllers
 {
     [ApiController]
     [ApiVersion("1")]
-    [ApiVersion("2")]
     public class UserController : ApiBaseController
     {
         private IUserManager _userManager;

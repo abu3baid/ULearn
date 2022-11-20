@@ -11,7 +11,7 @@ using ULearn.Core.Manager.Interfaces;
 
 namespace ULearn.API.Attributes
 {
-    public class ULearnAuthorizeAttribute
+    public class ULearnAuthorizeAttribute : Attribute, IAuthorizationFilter
     {
         public string Permissions { get; set; }
 
