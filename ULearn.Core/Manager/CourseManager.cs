@@ -96,8 +96,8 @@ namespace ULearn.Core.Manager
                 User = users
             };
 
-            data.Blog.Sortable.Add("Title", "Title");
-            data.Blog.Sortable.Add("CreatedDate", "Created Date");
+            data.Course.Sortable.Add("Title", "Title");
+            data.Course.Sortable.Add("CreatedDate", "Created Date");
 
             return data;
         }
