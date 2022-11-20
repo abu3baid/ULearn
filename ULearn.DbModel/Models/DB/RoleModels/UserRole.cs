@@ -12,7 +12,7 @@ namespace ULearn.DbModel.Models.DB.RoleModels
         public int UserId { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
-        public byte? IsArchived { get; set; }
+        public bool IsArchived { get; set; }
 
         public virtual Role Role { get; set; }
         public virtual User User { get; set; }

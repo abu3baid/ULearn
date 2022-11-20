@@ -19,7 +19,7 @@ namespace ULearn.DbModel.Models.DB.RoleModels
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
-        public byte IsArchived { get; set; }
+        public bool IsArchived { get; set; }
 
         public virtual Module Module { get; set; }
         public virtual ICollection<RolePermission> RolePermissions { get; set; }

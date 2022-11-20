@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ULearn.Common.Extensions;
 using ULearn.Core.Managers;
 using ULearn.DbModel.Models;
@@ -44,7 +41,7 @@ namespace ULearn.Core.Manager
                 }
 
                 base64img = base64Array[1];
-                var fileName = $"{Guid.NewGuid()}{"Logo.png"}".Replace("-", "", StringComparison.InvariantCultureIgnoreCase);
+                var fileName = $"{Guid.NewGuid()}{".png"}".Replace("-", "", StringComparison.InvariantCultureIgnoreCase);
                 if (!string.IsNullOrWhiteSpace(folderPath))
                 {
                     var url = $@"{baseFolder}\{fileName}";

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace ULearn.ModelView.ModelView
+namespace ULearn.ModelView.ModelView.Response
 {
     public class LoginUserResponse
     {

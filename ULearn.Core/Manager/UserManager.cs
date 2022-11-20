@@ -16,6 +16,7 @@ using ULearn.EmailService.Implementation;
 using ULearn.infrastructure;
 using ULearn.ModelView;
 using ULearn.ModelView.ModelView;
+using ULearn.ModelView.ModelView.Response;
 using ULearn.ModelView.Static;
 
 namespace ULearn.Core.Manager
@@ -73,6 +74,7 @@ namespace ULearn.Core.Manager
                 Email = userReg.Email.ToLower(),
                 Password = hashedPassword,
                 Image = string.Empty,
+                Phone = string.Empty,
                 ConfirmationLink = Guid.NewGuid().ToString().Replace("-", "").ToString()
             }).Entity;
 
