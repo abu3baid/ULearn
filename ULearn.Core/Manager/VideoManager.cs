@@ -1,12 +1,147 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ULearn.Common.Extensions;
+using ULearn.DbModel.Models.DB;
+using ULearn.DbModel.Models;
+using ULearn.ModelView.ModelView;
+using ULearn.ModelView.Request;
+using ULearn.ModelView.Response;
+using ULearn.Core.Manager.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using ULearn.ModelView.Result;
 
 namespace ULearn.Core.Manager
 {
-    public class VideoManager
+    public class VideoManager : IVideoManager
     {
+        public ulearndbContext _ulearndbContext;
+        private IMapper _mapper;
+
+        public VideoManager(ulearndbContext ulearndbContext, IMapper mapper)
+        {
+            _ulearndbContext = ulearndbContext;
+            _mapper = mapper;
+        }
+
+        public VideoModel CreateVideo(UserModel currentUser, VideoRequest VideoRequest)
+        {
+            Video video = null;
+
+            video = _ulearndbContext.Videos.Add(new Video
+            {
+                Name = VideoRequest.Name,
+                Description = VideoRequest.Description,
+                LessonId = currentUser.Id
+            }).Entity;
+
+            _ulearndbContext.SaveChanges();
+            return _mapper.Map<VideoModel>(video);
+        }
+
+        public VideoModel GetVideo(UserModel currentUser, int id)
+        {
+            var allowedPermissions = new List<string> { "videos_all_view", "video_view" };
+
+            var hasAccess = currentUser.Permissions.Any(a => allowedPermissions.Contains(a.Code));
+
+            var isAllView = currentUser.Permissions.Any(a => allowedPermissions.Equals("videos_all_view"));
+
+            var res = _ulearndbContext.Videos
+                                      .Include("Lesson")
+                                      .FirstOrDefault(a => (currentUser.IsSuperAdmin
+                                                           || (hasAccess
+                                                                && (isAllView || a.LessonId == currentUser.Id)))
+                                                           && a.Id == id)
+                                      ?? throw new ServiceValidationException("Invalid blog id received");
+
+            return _mapper.Map<VideoModel>(res);
+        }
+
+        public VideoResponse GetVideos(int page = 1,
+                                     int pageSize = 10,
+                                     string sortColumn = "",
+                                     string sortDirection = "ascending",
+                                     string searchText = "")
+        {
+            var queryRes = _ulearndbContext.Videos
+                                           .Where(a => string.IsNullOrWhiteSpace(searchText)
+                                                       || (a.Name.Contains(searchText)
+                                                       || a.Description.Contains(sortColumn)));
+
+            if (!string.IsNullOrWhiteSpace(sortColumn)
+                && sortDirection.Equals("ascending", StringComparison.InvariantCultureIgnoreCase))
+            {
+                queryRes = queryRes.OrderBy(sortColumn);
+            }
+            else if (!string.IsNullOrWhiteSpace(sortColumn)
+                && sortDirection.Equals("descending", StringComparison.InvariantCultureIgnoreCase))
+            {
+                queryRes = queryRes.OrderByDescending(sortColumn);
+            }
+
+            var res = queryRes.GetPaged(page, pageSize);
+
+            var userIds = res.Data
+                             .Select(a => a.LessonId)
+                             .Distinct()
+                             .ToList();
+
+            var lessons = _ulearndbContext.Users
+                                        .Where(a => userIds.Contains(a.Id))
+                                        .ToDictionary(a => a.Id, x => _mapper.Map<LessonResult>(x));
+
+            var data = new VideoResponse
+            {
+                Video = _mapper.Map<PagedResult<VideoModel>>(res),
+                Lesson = lessons
+            };
+
+            data.Video.Sortable.Add("Title", "Title");
+            data.Video.Sortable.Add("CreatedDate", "Created Date");
+
+            return data;
+        }
+
+        public VideoModel PutVideo(UserModel currentUser, VideoRequest VideoRequest)
+        {
+            Video video = null;
+
+            video = _ulearndbContext.Videos
+                                .FirstOrDefault(a => a.Id == VideoRequest.Id)
+                                ?? throw new ServiceValidationException("Invalid blog id received");
+
+            video.Name = VideoRequest.Name;
+            video.Description = VideoRequest.Description;
+            video.LessonId = VideoRequest.LessonId;
+
+            _ulearndbContext.SaveChanges();
+            return _mapper.Map<VideoModel>(video);
+        }
+
+        public void ArchiveVideo(UserModel currentUser, int id)
+        {
+            if (!currentUser.IsSuperAdmin)
+            {
+                throw new ServiceValidationException("You don't have permission to archive blog");
+            }
+
+            var data = _ulearndbContext.Videos
+                                    .FirstOrDefault(a => a.Id == id)
+                                    ?? throw new ServiceValidationException("Invalid blog id received");
+            data.IsArchived = true;
+            _ulearndbContext.SaveChanges();
+        }
+
+        public VideoResponse GetCourses(int page = 1, int pageSize = 10, string sortColumn = "", string sortDirection = "ascending", string searchText = "")
+        {
+            throw new NotImplementedException();
+        }
+
+        public VideoModel PutCourse(UserModel currentUser, VideoRequest VideoRequest)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
