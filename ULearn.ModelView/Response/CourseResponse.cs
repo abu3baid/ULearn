@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using ULearn.Common.Extensions;
+using ULearn.ModelView.ModelView;
+using ULearn.ModelView.Result;
 
-namespace ULearn.ModelView.ModelView.Response
+namespace ULearn.ModelView.Response
 {
     public class CourseResponse
     {

@@ -1,5 +1,5 @@
 ﻿using ULearn.ModelView.ModelView;
-using ULearn.ModelView.ModelView.Response;
+using ULearn.ModelView.Response;
 
 namespace ULearn.Core.Manager.Interfaces
 {

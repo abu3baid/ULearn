@@ -8,8 +8,9 @@ using ULearn.Core.Manager.Interfaces;
 using ULearn.DbModel.Models;
 using ULearn.DbModel.Models.DB;
 using ULearn.ModelView.ModelView;
-using ULearn.ModelView.ModelView.Response;
 using ULearn.ModelView.Request;
+using ULearn.ModelView.Response;
+using ULearn.ModelView.Result;
 
 namespace ULearn.Core.Manager
 {
@@ -131,6 +132,11 @@ namespace ULearn.Core.Manager
                                     ?? throw new ServiceValidationException("Invalid blog id received");
             data.IsArchived = true;
             _ulearndbContext.SaveChanges();
+        }
+
+        CourseResponse ICourseManager.GetCourses(int page, int pageSize, string sortColumn, string sortDirection, string searchText)
+        {
+            throw new NotImplementedException();
         }
     }
 }

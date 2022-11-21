@@ -4,16 +4,16 @@ using ULearn.ModelView.Response;
 
 namespace ULearn.Core.Manager.Interfaces
 {
-    public interface ICourseManager
+    public interface ILessonManager
     {
-        void ArchiveCourse(UserModel currentUser, int id);
-        CourseModel CreateCourse(UserModel currentUser, CourseRequest courseRequest);
-        CourseModel GetCourse(UserModel currentUser, int id);
-        CourseResponse GetCourses(int page = 1, 
+        void ArchiveLesson(UserModel currentUser, int id);
+        LessonModel CreateLesson(UserModel currentUser, LessonRequest lessonRequest);
+        LessonModel GetLesson(UserModel currentUser, int id);
+        LessonResponse GetLessons(int page = 1,
                                   int pageSize = 10, 
                                   string sortColumn = "", 
                                   string sortDirection = "ascending", 
                                   string searchText = "");
-        CourseModel PutCourse(UserModel currentUser, CourseRequest courseRequest);
+        CourseModel PutLesson(UserModel currentUser, LessonRequest LessonRequest);
     }
 }

@@ -16,7 +16,7 @@ using ULearn.EmailService.Implementation;
 using ULearn.infrastructure;
 using ULearn.ModelView;
 using ULearn.ModelView.ModelView;
-using ULearn.ModelView.ModelView.Response;
+using ULearn.ModelView.Response;
 using ULearn.ModelView.Static;
 
 namespace ULearn.Core.Manager
@@ -192,6 +192,16 @@ namespace ULearn.Core.Manager
                         signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        LoginUserResponse IUserManager.Login(LoginModelView userReg)
+        {
+            throw new NotImplementedException();
+        }
+
+        LoginUserResponse IUserManager.SignUp(UserRegistrationModel userReg)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion private  

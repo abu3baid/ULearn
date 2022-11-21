@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 
-namespace ULearn.ModelView.ModelView.Response
+namespace ULearn.ModelView.Result
 {
-    public class LoginUserResponse
+    public class UserResult
     {
         public int Id { get; set; }
 
@@ -14,7 +14,5 @@ namespace ULearn.ModelView.ModelView.Response
         public string Image { get; set; }
 
         public string Email { get; set; }
-
-        public string Token { get; set; }
     }
 }

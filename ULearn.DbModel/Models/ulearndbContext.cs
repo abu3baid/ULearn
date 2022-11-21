@@ -34,7 +34,7 @@ namespace ULearn.DbModel.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySQL("Server=localhost;port=3306;user=root;password=anmmn59;database=ulearndb;");
+                optionsBuilder.UseMySQL("Server=ulearn.abu3beid.com;port=3306;user=ulearn;password=5yc&814Ja;database=ulearndb;");
             }
         }
 
