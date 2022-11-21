@@ -9,8 +9,8 @@ using ULearn.ModelView.ModelView;
 using ULearn.ModelView.Request;
 using Microsoft.EntityFrameworkCore;
 using ULearn.Core.Manager.Interfaces;
-using ULearn.ModelView.Result;
 using ULearn.ModelView.Response;
+using ULearn.ModelView.Result;
 
 namespace ULearn.Core.Manager
 {
@@ -132,11 +132,6 @@ namespace ULearn.Core.Manager
                                     ?? throw new ServiceValidationException("Invalid blog id received");
             data.IsArchived = true;
             _ulearndbContext.SaveChanges();
-        }
-
-        LessonResponse ILessonManager.GetLessons(int page, int pageSize, string sortColumn, string sortDirection, string searchText)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -133,10 +133,5 @@ namespace ULearn.Core.Manager
             data.IsArchived = true;
             _ulearndbContext.SaveChanges();
         }
-
-        CourseResponse ICourseManager.GetCourses(int page, int pageSize, string sortColumn, string sortDirection, string searchText)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
