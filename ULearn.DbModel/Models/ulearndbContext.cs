@@ -184,7 +184,7 @@ namespace ULearn.DbModel.Models
             {
                 entity.HasNoKey();
 
-                entity.ToView(nameof(UserPermissionView));
+                entity.ToView("userpermissionview");
 
                 entity.Property(e => e.UserId).HasColumnType("int(11)");
 
