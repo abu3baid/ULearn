@@ -20,7 +20,7 @@ namespace ULearn.API.Controllers
             _logger = logger;
         }
 
-        [Route("api/v{version:apiVersion}/course/create")]
+        [Route("api/v{version:apiVersion}/create")]
         [HttpPost]
         [MapToApiVersion("1")]
         [Authorize]
@@ -31,7 +31,7 @@ namespace ULearn.API.Controllers
             return Ok(result);
         }
 
-        [Route("api/v{version:apiVersion}/course/getAll")]
+        [Route("api/v{version:apiVersion}/getAll")]
         [HttpGet]
         [ULearnAuthorize(Permissions = "courses_all_view")]
         [MapToApiVersion("1")]
@@ -45,7 +45,7 @@ namespace ULearn.API.Controllers
             return Ok(result);
         }
 
-        [Route("api/v{version:apiVersion}/course/get/{id}")]
+        [Route("api/v{version:apiVersion}/get/{id}")]
         [HttpGet]
         [MapToApiVersion("1")]
         [Authorize]
@@ -56,7 +56,7 @@ namespace ULearn.API.Controllers
             return Ok(result);
         }
 
-        [Route("api/v{version:apiVersion}/course/delete/{id}")]
+        [Route("api/v{version:apiVersion}/delete/{id}")]
         [HttpDelete]
         [MapToApiVersion("1")]
         [Authorize]
@@ -67,7 +67,7 @@ namespace ULearn.API.Controllers
             return Ok();
         }
 
-        [Route("api/v{version:apiVersion}/course/update")]
+        [Route("api/v{version:apiVersion}/update")]
         [HttpPut]
         [MapToApiVersion("1")]
         [Authorize]

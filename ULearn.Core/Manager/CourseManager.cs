@@ -115,7 +115,6 @@ namespace ULearn.Core.Manager
             course.CourseName = courseRequest.CourseName;
             course.CourseDescription = courseRequest.CourseDescription;
 
-
             _ulearndbContext.SaveChanges();
             return _mapper.Map<CourseModel>(course);
         }

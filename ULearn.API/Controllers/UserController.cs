@@ -21,7 +21,7 @@ namespace ULearn.API.Controllers
             _userManager = userManager;
         }
 
-        [Route("api/v{version:apiVersion}/user/signUp")]
+        [Route("api/v{version:apiVersion}/signUp")]
         [HttpPost]
         [AllowAnonymous]
         [MapToApiVersion("1")]
@@ -31,7 +31,7 @@ namespace ULearn.API.Controllers
             return Ok(res);
         }
 
-        [Route("api/v{version:apiVersion}/user/login")]
+        [Route("api/v{version:apiVersion}/login")]
         [HttpPost]
         [AllowAnonymous]
         [MapToApiVersion("1")]
@@ -41,7 +41,7 @@ namespace ULearn.API.Controllers
             return Ok(res);
         }
 
-        [Route("api/v{version:apiVersion}/user/fileretrive/profilepic")]
+        [Route("api/v{version:apiVersion}/fileretrive/profilepic")]
         [HttpGet]
         [MapToApiVersion("1")]
         public IActionResult Retrive(string filename)
@@ -52,7 +52,7 @@ namespace ULearn.API.Controllers
             return File(byteArray, "image/jpeg", filename);
         }
 
-        [Route("api/v{version:apiVersion}/user/myProfile")]
+        [Route("api/v{version:apiVersion}/myProfile")]
         [HttpPut]
         [MapToApiVersion("1")]
         [Authorize]
@@ -63,7 +63,7 @@ namespace ULearn.API.Controllers
         }
 
         [HttpDelete]
-        [Route("api/v{version:apiVersion}/user/{id}")]
+        [Route("api/v{version:apiVersion}/{id}")]
         [MapToApiVersion("1")]
         public IActionResult Delete(int id)
         {
@@ -71,7 +71,7 @@ namespace ULearn.API.Controllers
             return Ok();
         }
 
-        [Route("api/v{version:apiVersion}/user/Confirmation")]
+        [Route("api/v{version:apiVersion}/Confirmation")]
         [HttpPost]
         [MapToApiVersion("1")]
         public IActionResult Confirmation(string confirmationLink)
