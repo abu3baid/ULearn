@@ -9,7 +9,7 @@ namespace ULearn.ModelView.Request
     public class CourseRequest
     {
         public int Id { get; set; }
-        public string CourseName { get; set; }
-        public string CourseDescription { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

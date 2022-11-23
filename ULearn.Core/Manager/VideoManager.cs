@@ -25,7 +25,7 @@ namespace ULearn.Core.Manager
             _mapper = mapper;
         }
 
-        public VideoModel CreateVideo(UserModel currentUser, VideoRequest VideoRequest)
+        public VideoModel CreateVideo(VideoRequest VideoRequest)
         {
             Video video = null;
 
@@ -33,7 +33,8 @@ namespace ULearn.Core.Manager
             {
                 Name = VideoRequest.Name,
                 Description = VideoRequest.Description,
-                LessonId = currentUser.Id
+                Url = string.Empty,
+                LessonId = VideoRequest.LessonId
             }).Entity;
 
             _ulearndbContext.SaveChanges();
@@ -42,18 +43,9 @@ namespace ULearn.Core.Manager
 
         public VideoModel GetVideo(UserModel currentUser, int id)
         {
-            var allowedPermissions = new List<string> { "videos_all_view", "video_view" };
-
-            var hasAccess = currentUser.Permissions.Any(a => allowedPermissions.Contains(a.Code));
-
-            var isAllView = currentUser.Permissions.Any(a => allowedPermissions.Equals("videos_all_view"));
-
             var res = _ulearndbContext.Videos
                                       .Include("Lesson")
-                                      .FirstOrDefault(a => (currentUser.IsSuperAdmin
-                                                           || (hasAccess
-                                                                && (isAllView || a.LessonId == currentUser.Id)))
-                                                           && a.Id == id)
+                                      .FirstOrDefault(a => a.Id == id)
                                       ?? throw new ServiceValidationException("Invalid blog id received");
 
             return _mapper.Map<VideoModel>(res);
@@ -83,13 +75,13 @@ namespace ULearn.Core.Manager
 
             var res = queryRes.GetPaged(page, pageSize);
 
-            var userIds = res.Data
+            var lessonsIds = res.Data
                              .Select(a => a.LessonId)
                              .Distinct()
                              .ToList();
 
-            var lessons = _ulearndbContext.Users
-                                        .Where(a => userIds.Contains(a.Id))
+            var lessons = _ulearndbContext.Lessons
+                                        .Where(a => lessonsIds.Contains(a.Id))
                                         .ToDictionary(a => a.Id, x => _mapper.Map<LessonResult>(x));
 
             var data = new VideoResponse
@@ -110,7 +102,7 @@ namespace ULearn.Core.Manager
 
             video = _ulearndbContext.Videos
                                 .FirstOrDefault(a => a.Id == VideoRequest.Id)
-                                ?? throw new ServiceValidationException("Invalid blog id received");
+                                ?? throw new ServiceValidationException("Invalid video id received");
 
             video.Name = VideoRequest.Name;
             video.Description = VideoRequest.Description;
@@ -124,12 +116,12 @@ namespace ULearn.Core.Manager
         {
             if (!currentUser.IsSuperAdmin)
             {
-                throw new ServiceValidationException("You don't have permission to archive blog");
+                throw new ServiceValidationException("You don't have permission to archive video");
             }
 
             var data = _ulearndbContext.Videos
                                     .FirstOrDefault(a => a.Id == id)
-                                    ?? throw new ServiceValidationException("Invalid blog id received");
+                                    ?? throw new ServiceValidationException("Invalid video id received");
             data.IsArchived = true;
             _ulearndbContext.SaveChanges();
         }

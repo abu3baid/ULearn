@@ -14,8 +14,8 @@ namespace ULearn.DbModel.Models.DB
         }
 
         public int Id { get; set; }
-        public string CourseName { get; set; }
-        public string CourseDescription { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
         public int Rate { get; set; }
         public int TeacherId { get; set; }
         [Timestamp]

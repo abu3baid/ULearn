@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.IO;
+using ULearn.API.Attributes;
 using ULearn.Core.Manager.Interfaces;
 using ULearn.ModelView.ModelView;
 
@@ -56,6 +57,7 @@ namespace ULearn.API.Controllers
         [HttpPut]
         [MapToApiVersion("1")]
         [Authorize]
+        [ULearnAuthorize(Permissions = "user_edit")]
         public IActionResult UpdateMyProfile(UserModel request)
         {
             var user = _userManager.UpdateProfile(LoggedInUser , request);
@@ -65,6 +67,8 @@ namespace ULearn.API.Controllers
         [HttpDelete]
         [Route("api/v{version:apiVersion}/{id}")]
         [MapToApiVersion("1")]
+        [Authorize]
+        [ULearnAuthorize(Permissions = "user_delete")]
         public IActionResult Delete(int id)
         {
             _userManager.DeleteUser(LoggedInUser, id);

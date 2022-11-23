@@ -28,7 +28,7 @@ namespace ULearn.API.Controllers
         [ULearnAuthorize(Permissions = "video_create")]
         public IActionResult CreateVideo(VideoRequest videoRequest)
         {
-            var result = _videoManager.CreateVideo(LoggedInUser, videoRequest);
+            var result = _videoManager.CreateVideo(videoRequest);
             return Ok(result);
         }
 
@@ -72,7 +72,7 @@ namespace ULearn.API.Controllers
         [HttpPut]
         [MapToApiVersion("1")]
         [Authorize]
-        [ULearnAuthorize(Permissions = "course_edit")]
+        [ULearnAuthorize(Permissions = "video_edit")]
         public IActionResult PutVideo(VideoRequest videoRequest)
         {
             var result = _videoManager.PutVideo(LoggedInUser, videoRequest);

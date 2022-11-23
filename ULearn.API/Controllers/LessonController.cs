@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ULearn.API.Attributes;
-using ULearn.Core.Manager.Interfaces;
+using ULearn.Core.Manager;
 using ULearn.ModelView.Request;
 
 namespace ULearn.API.Controllers
@@ -25,16 +25,16 @@ namespace ULearn.API.Controllers
         [HttpPost]
         [MapToApiVersion("1")]
         [Authorize]
-        [ULearnAuthorize(Permissions = "Create new Lesson")]
+        [ULearnAuthorize(Permissions = "lesson_create")]
         public IActionResult CreateLesson(LessonRequest LessonRequest)
         {
-            var result = _LessonManager.CreateLesson(LoggedInUser, LessonRequest);
+            var result = _LessonManager.CreateLesson(LessonRequest);
             return Ok(result);
         }
 
         [Route("api/v{version:apiVersion}/getAll")]
         [HttpGet]
-        [ULearnAuthorize(Permissions = "View All Lesson")]
+        [ULearnAuthorize(Permissions = "lessons_all_view")]
         [MapToApiVersion("1")]
         public IActionResult GetLessons(int page = 1,
                                       int pageSize = 5,
@@ -50,7 +50,7 @@ namespace ULearn.API.Controllers
         [HttpGet]
         [MapToApiVersion("1")]
         [Authorize]
-        [ULearnAuthorize(Permissions = "View All Lesson,View Lesson")]
+        [ULearnAuthorize(Permissions = "lessons_all_view,lesson_view")]
         public IActionResult GetLesson(int id)
         {
             var result = _LessonManager.GetLesson(LoggedInUser, id);
@@ -61,7 +61,7 @@ namespace ULearn.API.Controllers
         [HttpDelete]
         [MapToApiVersion("1")]
         [Authorize]
-        [ULearnAuthorize(Permissions = "Delete Lesson")]
+        [ULearnAuthorize(Permissions = "lesson_delete")]
         public IActionResult ArchiveLesson(int id)
         {
             _LessonManager.ArchiveLesson(LoggedInUser, id);
@@ -72,10 +72,10 @@ namespace ULearn.API.Controllers
         [HttpPut]
         [MapToApiVersion("1")]
         [Authorize]
-        [ULearnAuthorize(Permissions = "Edit Lesson")]
+        [ULearnAuthorize(Permissions = "lesson_edit")]
         public IActionResult PutLesson(LessonRequest LessonRequest)
         {
-            var result = _LessonManager.PutLesson(LoggedInUser, LessonRequest);
+            var result = _LessonManager.PutLesson(LessonRequest);
             return Ok(result);
         }
     }

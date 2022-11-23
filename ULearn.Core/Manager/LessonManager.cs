@@ -25,7 +25,7 @@ namespace ULearn.Core.Manager
             _mapper = mapper;
         }
 
-        public LessonModel CreateLesson(UserModel currentUser, LessonRequest lessonRequest)
+        public LessonModel CreateLesson(LessonRequest lessonRequest)
         {
             Lesson lesson = null;
 
@@ -42,18 +42,9 @@ namespace ULearn.Core.Manager
 
         public LessonModel GetLesson(UserModel currentUser, int id)
         {
-            var allowedPermissions = new List<string> { "lessons_all_view", "lesson_view" };
-
-            var hasAccess = currentUser.Permissions.Any(a => allowedPermissions.Contains(a.Code));
-
-            var isAllView = currentUser.Permissions.Any(a => allowedPermissions.Equals("lessons_all_view"));
-
             var res = _ulearndbContext.Lessons
                                       .Include("Course")
-                                      .FirstOrDefault(a => (currentUser.IsSuperAdmin
-                                                           || (hasAccess
-                                                                && (isAllView || a.CourseId == currentUser.Id)))
-                                                           && a.Id == id)
+                                      .FirstOrDefault(a => a.Id == id)
                                       ?? throw new ServiceValidationException("Invalid lesson id received");
 
             return _mapper.Map<LessonModel>(res);
@@ -88,7 +79,7 @@ namespace ULearn.Core.Manager
                              .Distinct()
                              .ToList();
 
-            var courses = _ulearndbContext.Users
+            var courses = _ulearndbContext.Courses
                                           .Where(a => courseIds.Contains(a.Id))
                                           .ToDictionary(a => a.Id, x => _mapper.Map<CourseResult>(x));
 
@@ -104,32 +95,34 @@ namespace ULearn.Core.Manager
             return data;
         }
 
-        public CourseModel PutLesson(UserModel currentUser, LessonRequest LessonRequest)
+        public LessonModel PutLesson(LessonRequest LessonRequest)
         {
             Lesson Lesson = null;
 
             Lesson = _ulearndbContext.Lessons
                                 .FirstOrDefault(a => a.Id == LessonRequest.Id)
-                                ?? throw new ServiceValidationException("Invalid blog id received");
+                                ?? throw new ServiceValidationException("Invalid lesson id received");
 
             Lesson.Name = LessonRequest.Name;
             Lesson.Description = LessonRequest.Description;
+            Lesson.Id = LessonRequest.Id;
+            Lesson.CourseId = LessonRequest.CourseId;
 
 
             _ulearndbContext.SaveChanges();
-            return _mapper.Map<CourseModel>(Lesson);
+            return _mapper.Map<LessonModel>(Lesson);
         }
 
         public void ArchiveLesson(UserModel currentUser, int id)
         {
             if (!currentUser.IsSuperAdmin)
             {
-                throw new ServiceValidationException("You don't have permission to archive blog");
+                throw new ServiceValidationException("You don't have permission to archive lesson");
             }
 
             var data = _ulearndbContext.Lessons
                                     .FirstOrDefault(a => a.Id == id)
-                                    ?? throw new ServiceValidationException("Invalid blog id received");
+                                    ?? throw new ServiceValidationException("Invalid lesson id received");
             data.IsArchived = true;
             _ulearndbContext.SaveChanges();
         }

@@ -49,7 +49,12 @@ namespace ULearn.DbModel.Models
 
                 entity.HasIndex(e => e.TeacherId, "courseId_teacherId_idx");
 
-                entity.Property(e => e.CourseName)
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasDefaultValueSql("''");
+
+                entity.Property(e => e.Description)
                     .IsRequired()
                     .HasMaxLength(255)
                     .HasDefaultValueSql("''");
@@ -83,6 +88,11 @@ namespace ULearn.DbModel.Models
                 entity.Property(e => e.IsArchived).HasColumnType("tinyint");
 
                 entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasDefaultValueSql("''");
+
+                entity.Property(e => e.Description)
                     .IsRequired()
                     .HasMaxLength(255)
                     .HasDefaultValueSql("''");

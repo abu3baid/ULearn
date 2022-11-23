@@ -31,8 +31,8 @@ namespace ULearn.Core.Manager
 
             course = _ulearndbContext.Courses.Add(new Course
             {
-                CourseName = courseRequest.CourseName,
-                CourseDescription = courseRequest.CourseDescription,
+                Name = courseRequest.Name,
+                Description = courseRequest.Description,
                 TeacherId = currentUser.Id
             }).Entity;
 
@@ -54,7 +54,7 @@ namespace ULearn.Core.Manager
                                                            || (hasAccess
                                                                 && (isAllView || a.TeacherId == currentUser.Id)))
                                                            && a.Id == id)
-                                      ?? throw new ServiceValidationException("Invalid blog id received");
+                                      ?? throw new ServiceValidationException("Invalid course id received");
 
             return _mapper.Map<CourseModel>(res);
         }
@@ -67,8 +67,8 @@ namespace ULearn.Core.Manager
         {
             var queryRes = _ulearndbContext.Courses
                                            .Where(a => string.IsNullOrWhiteSpace(searchText)
-                                                       || (a.CourseName.Contains(searchText)
-                                                       || a.CourseDescription.Contains(sortColumn)));
+                                                       || (a.Name.Contains(searchText)
+                                                       || a.Description.Contains(sortColumn)));
 
             if (!string.IsNullOrWhiteSpace(sortColumn)
                 && sortDirection.Equals("ascending", StringComparison.InvariantCultureIgnoreCase))
@@ -110,10 +110,10 @@ namespace ULearn.Core.Manager
 
             course = _ulearndbContext.Courses
                                 .FirstOrDefault(a => a.Id == courseRequest.Id)
-                                ?? throw new ServiceValidationException("Invalid blog id received");
+                                ?? throw new ServiceValidationException("Invalid course id received");
 
-            course.CourseName = courseRequest.CourseName;
-            course.CourseDescription = courseRequest.CourseDescription;
+            course.Name = courseRequest.Name;
+            course.Description = courseRequest.Description;
 
             _ulearndbContext.SaveChanges();
             return _mapper.Map<CourseModel>(course);
@@ -123,12 +123,12 @@ namespace ULearn.Core.Manager
         {
             if (!currentUser.IsSuperAdmin)
             {
-                throw new ServiceValidationException("You don't have permission to archive blog");
+                throw new ServiceValidationException("You don't have permission to archive course");
             }
 
             var data = _ulearndbContext.Courses
                                     .FirstOrDefault(a => a.Id == id)
-                                    ?? throw new ServiceValidationException("Invalid blog id received");
+                                    ?? throw new ServiceValidationException("Invalid course id received");
             data.IsArchived = true;
             _ulearndbContext.SaveChanges();
         }
