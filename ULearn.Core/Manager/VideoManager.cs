@@ -25,16 +25,16 @@ namespace ULearn.Core.Manager
             _mapper = mapper;
         }
 
-        public VideoModel CreateVideo(VideoRequest VideoRequest)
+        public VideoModel CreateVideo(VideoRequest videoRequest)
         {
             Video video = null;
 
             video = _ulearndbContext.Videos.Add(new Video
             {
-                Name = VideoRequest.Name,
-                Description = VideoRequest.Description,
-                Url = string.Empty,
-                LessonId = VideoRequest.LessonId
+                Name = videoRequest.Name,
+                Description = videoRequest.Description,
+                Url = videoRequest.Url,
+                LessonId = videoRequest.LessonId
             }).Entity;
 
             _ulearndbContext.SaveChanges();
@@ -96,17 +96,18 @@ namespace ULearn.Core.Manager
             return data;
         }
 
-        public VideoModel PutVideo(UserModel currentUser, VideoRequest VideoRequest)
+        public VideoModel PutVideo(UserModel currentUser, VideoRequest videoRequest)
         {
             Video video = null;
 
             video = _ulearndbContext.Videos
-                                .FirstOrDefault(a => a.Id == VideoRequest.Id)
+                                .FirstOrDefault(a => a.Id == videoRequest.Id)
                                 ?? throw new ServiceValidationException("Invalid video id received");
 
-            video.Name = VideoRequest.Name;
-            video.Description = VideoRequest.Description;
-            video.LessonId = VideoRequest.LessonId;
+            video.Name = videoRequest.Name;
+            video.Description = videoRequest.Description;
+            video.LessonId = videoRequest.LessonId;
+            video.Url = videoRequest.Url;
 
             _ulearndbContext.SaveChanges();
             return _mapper.Map<VideoModel>(video);
