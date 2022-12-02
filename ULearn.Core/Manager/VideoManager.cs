@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using ULearn.Common.Extensions;
 using ULearn.DbModel.Models.DB;
