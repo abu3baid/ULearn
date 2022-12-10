@@ -21,7 +21,5 @@ namespace ULearn.infrastructure.Implementation
 
         public string Issuer => _config["Jwt:Issuer"];
 
-        public string WebSiteURl => _config["URL:WebSiteURl"];
-
     }
 }

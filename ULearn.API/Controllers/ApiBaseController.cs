@@ -8,7 +8,7 @@ using ULearn.ModelView.ModelView;
 
 namespace ULearn.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ApiBaseController : Controller
     {

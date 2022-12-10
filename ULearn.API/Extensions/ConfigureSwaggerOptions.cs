@@ -30,7 +30,6 @@ namespace ULearn.API.Extensions
                 Title = "ULearn APIs",
                 Description = "ULearn System Public APIs",
                 Contact = new OpenApiContact() { Name = "Mohammed Abu Ibaid", Email = "m76eef@gmail.com", Url = new Uri("https://github.com/abu3baid") },
-                //Contact2 = new OpenApiContact() { Name = "Hassan Salah", Email = "mustafasalah21@gmail.com", Url = new Uri("https://github.com/mustafasalah21") },
                 Version = description.ApiVersion.ToString()
             };
 

@@ -1,5 +1,8 @@
 using Autofac.Extensions.DependencyInjection;
+using Google.Protobuf.WellKnownTypes;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Hosting;
 using System.IO;
 

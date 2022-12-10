@@ -6,6 +6,7 @@ using LMS.Core.Mapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
@@ -61,12 +62,7 @@ namespace ULearn.API
                     .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                     .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-            services.AddCors(o => o.AddPolicy("ULearnPolicy", policy =>
-            {
-                policy.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            }));
+            services.AddCors();
 
             ApiFactory.RegisterDependencies(services);
 
@@ -188,17 +184,7 @@ namespace ULearn.API
                           .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Minute)
                           .CreateLogger();
 
-            app.UseSwagger(c =>
-            {
-                c.RouteTemplate = "swagger/{documentName}/swagger.json";
-                c.PreSerializeFilters.Add((swaggerDoc, httpReq) =>
-                {
-                    swaggerDoc.Servers = new List<OpenApiServer>
-                    {
-                        new OpenApiServer { Url = $"{Configuration.GetSection("Domain").Value}" }
-                    };
-                });
-            });
+            app.UseSwagger();
 
             app.UseSwaggerUI(
             options =>
@@ -212,9 +198,14 @@ namespace ULearn.API
 
             app.ConfigureExceptionHandler(Log.Logger, env);
 
-            app.UseCors("ULearnPolicy");
+            app.UseCors(
+                options => options.WithOrigins("https://ulearn.abu3beid.com").AllowAnyMethod()
+                );
 
-            app.UseHttpsRedirection();
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             app.UseAuthentication();
 
