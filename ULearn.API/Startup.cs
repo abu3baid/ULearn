@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Text;
 using AutoMapper;
 using LMS.Core.Mapper;

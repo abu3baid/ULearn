@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ULearn.Common.Extensions;
 using ULearn.ModelView.ModelView;
 using ULearn.ModelView.Result;

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using ULearn.Core.Manager.Interfaces;
-using ULearn.ModelView;
+﻿using ULearn.Core.Manager.Interfaces;
 
 namespace ULearn.Core.Managers
 {
