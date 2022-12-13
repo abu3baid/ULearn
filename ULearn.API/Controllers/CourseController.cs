@@ -33,7 +33,7 @@ namespace ULearn.API.Controllers
 
         [Route("api/v{version:apiVersion}/getAll")]
         [HttpGet]
-        [ULearnAuthorize(Permissions = "courses_all_view")]
+        //[ULearnAuthorize(Permissions = "courses_all_view")]
         [MapToApiVersion("1")]
         public IActionResult GetCourses(int page = 1,
                                       int pageSize = 5,
@@ -48,7 +48,6 @@ namespace ULearn.API.Controllers
         [Route("api/v{version:apiVersion}/get/{id}")]
         [HttpGet]
         [MapToApiVersion("1")]
-        [Authorize]
         [ULearnAuthorize(Permissions = "courses_all_view,course_view")]
         public IActionResult GetCourse(int id)
         {
@@ -59,7 +58,6 @@ namespace ULearn.API.Controllers
         [Route("api/v{version:apiVersion}/delete/{id}")]
         [HttpDelete]
         [MapToApiVersion("1")]
-        [Authorize]
         [ULearnAuthorize(Permissions = "course_delete")]
         public IActionResult ArchiveCourse(int id)
         {
@@ -70,7 +68,6 @@ namespace ULearn.API.Controllers
         [Route("api/v{version:apiVersion}/update")]
         [HttpPut]
         [MapToApiVersion("1")]
-        [Authorize]
         [ULearnAuthorize(Permissions = "course_edit")]
         public IActionResult PutCourse(CourseRequest courseRequest)
         {

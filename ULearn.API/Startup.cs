@@ -199,7 +199,7 @@ namespace ULearn.API
             app.ConfigureExceptionHandler(Log.Logger, env);
 
             app.UseCors(
-                options => options.WithOrigins("https://ulearn.abu3beid.com").AllowAnyMethod()
+                options => options.WithOrigins("http://localhost:4200/").AllowAnyMethod()
                 );
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
