@@ -61,7 +61,13 @@ namespace ULearn.API
                     .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                     .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-            services.AddCors();
+            services.AddCors(option =>
+            {
+                option.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                });
+            });
 
             ApiFactory.RegisterDependencies(services);
 
@@ -197,9 +203,7 @@ namespace ULearn.API
 
             app.ConfigureExceptionHandler(Log.Logger, env);
 
-            app.UseCors(
-                options => options.WithOrigins("http://localhost:4200/").AllowAnyMethod()
-                );
+            app.UseCors();
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
